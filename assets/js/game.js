@@ -4,16 +4,26 @@ var playerAttack = 10;
 var playerMoney = 10;
 
 // You can also log multiple values at once like this
-console.log(playerName, playerAttack, playerHealth);
+console.log(playerName, playerAttack, playerHealth, playerMoney);
 
-var enemyName = "Roborto";
+var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
+console.log(enemyNames);
+console.log(enemyNames[0]);
+console.log(enemyNames[1]);
+console.log(enemyNames[2]);
+console.log(enemyNames.length);
+for(var i = 0; i < enemyNames.length; i++) {
+    console.log(enemyNames[i]);
+    console.log(i);
+    console.log(enemyNames[i] + " is at " + i + " index ");
+}
 var enemyHealth = 50;
 var enemyAttack = 12;
 
 var fight = function() {
     window.alert("Welcome to Robot Gladiators!");
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-    //if player choses to fight, then fihgt
+    //if player choses to fight, then fight
     if (promptFight === "fight" || promptFight === "FIGHT") {
         //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
         enemyHealth = enemyHealth - playerAttack;
@@ -59,14 +69,10 @@ var fight = function() {
         else {
             fight();
         }
-            window.alert(playerName + " has chosen to skip the fight!");
     }   else {
             window.alert("You need to pick a valid option. Try again!");
-    }
-    
-    
-    
+    }  
     
 };
 
-fight();
+//fight();
