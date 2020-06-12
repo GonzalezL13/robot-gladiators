@@ -5,32 +5,37 @@ var randomNumber = function (min, max) {
     return value;
 };
 
+var fightOrSkip = function () {
+    // ask user if they'd like to fight or skip using  function
+    var promptFight = window.prompt('Would you like FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+    // Enter the conditional recursive function call here!
+    if (promptFight === "" || promptFight === null) {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();
+    }
+    promptFight = promptFight.toLowerCase();
+    // if user picks "skip" confirm and then stop the loop
+    if (promptFight === "skip") {
+        // confirm user wants to skip
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+        // if yes (true), leave fight
+        if (confirmSkip) {
+            window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+            // subtract money from playerMoney for skipping, but don't let them go into the negative
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            return true;
+        }
+    }
+    return false;
+};
+
 var fight = function (enemy) {
     // repeat and execute as long as the enemy robot is alive 
     while (enemy.health > 0 && playerInfo.health > 0) {
-        //place fight function code
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-        //if user picks "skip" confirm and then stop the loop
-        if (promptFight === "skip" || promptFight === "SKIP") {
-            // confirm user wants to skip
-            var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-            // if yes (true), leave fight
-            if (confirmSkip) {
-                window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
-                // subtract money from playerInfo.money for skipping
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerInfo.money", playerInfo.money)
+            if (fightOrSkip()) {
+                //if true, leave fight by breaking loop
                 break;
             }
-            // if no (false), ask question again by running fight() again
-            else {
-                fight();
-            }
-        }
-        //if player choses to fight, then fight
-        if (promptFight === "fight" || promptFight === "FIGHT") {
-            //generate random damage value based on player's attack power
             var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
             //Subtract the value of `playerInfo.attack` from the value of `enemy.health` and use that result to update the value in the `enemy.health` variable
             enemy.health = Math.max(0, enemy.health - damage)
@@ -66,16 +71,12 @@ var fight = function (enemy) {
             else {
                 window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
             }
-        }
-        else {
-            window.alert("You need to pick a valid option. Try again!");
-        }
     }
 };
 
-var getPlayerName = function() {
+var getPlayerName = function () {
     var name = "";
-    while (name === "" || name === null){
+    while (name === "" || name === null) {
         name = prompt("What is your robot's name?");
     }
     console.log(" Your robot's name is " + name);
@@ -87,27 +88,27 @@ var playerInfo = {
     health: 100,
     attack: 10,
     money: 10,
-    reset: function() {
+    reset: function () {
         this.health = 100;
         this.money = 10;
         this.attack = 10;
     },
-    refillHealth: function() {
+    refillHealth: function () {
         if (this.money >= 7) {
             window.alert("Refilling player's health by 20 for 7 dollars.");
-            this.health +=20;
+            this.health += 20;
             this.money -= 7;
         }
         else {
             window.alert("You don't have enough money!")
         }
     },
-    upgradeAttack: function() {
+    upgradeAttack: function () {
         if (this.money >= 7) {
             window.alert("Upgrading player's attack by 6 for 7 dollars.");
             this.attack += 6;
             this.money -= 7;
-        } 
+        }
         else {
             window.alert("You don't have enough money!");
         }
